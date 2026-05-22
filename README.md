@@ -1,98 +1,210 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+# meka-ops
+
+<p align="left">
+  <img src="https://img.shields.io/badge/NestJS-11-E0234E?logo=nestjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeORM-0.3-orange" />
+  <img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/pnpm-package_manager-F69220?logo=pnpm&logoColor=white" />
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> **Production-grade Vehicle Service & Maintenance Operations API**
+> Built from scratch as a solo backend engineering deep-dive — real architecture, real patterns, real production standards.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## What Is This?
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**meka-ops** is a RESTful API backend for vehicle service shops — motorcycle shops, car PMS centers, small garages, and maintenance operations.
 
-## Project setup
+It manages the full lifecycle of a service job:
 
-```bash
-$ pnpm install
+```
+Customer brings vehicle → Service Advisor creates Service Request
+→ Mechanic gets assigned → Works through statuses (PENDING → INSPECTING → IN_PROGRESS → COMPLETED)
+→ Parts consumed from Inventory → Invoice generated with labor + parts cost
+→ Maintenance Record saved to vehicle history
 ```
 
-## Compile and run the project
+This project is intentionally built as a **learning vehicle** for production backend engineering fundamentals — not a tutorial, not a CRUD toy. Every decision has a reason. Every pattern has a tradeoff.
 
-```bash
-# development
-$ pnpm run start
+---
 
-# watch mode
-$ pnpm run start:dev
+## Tech Stack
 
-# production mode
-$ pnpm run start:prod
+| Layer | Technology |
+|---|---|
+| Framework | NestJS 11 |
+| Language | TypeScript 5.7 |
+| Database | PostgreSQL 16 |
+| ORM | TypeORM 0.3 |
+| Auth | JWT (access + refresh), Passport, bcrypt |
+| Validation | class-validator, class-transformer, Joi |
+| Logging | nestjs-pino (structured JSON logs) |
+| Rate Limiting | @nestjs/throttler |
+| API Docs | Swagger / OpenAPI |
+| Security | Helmet, CORS |
+| Package Manager | pnpm |
+| Containerization | Docker + Docker Compose |
+| CI/CD | GitHub Actions |
+
+---
+
+## Architecture
+
+Monolith with modular layered architecture. Each module is self-contained:
+
+```
+src/
+├── common/               # Shared utilities (pagination, response, decorators)
+├── config/               # Typed config namespaces (app, db, jwt, throttler)
+├── database/             # TypeORM module, migrations, seeds
+├── modules/
+│   ├── auth/             # JWT auth, refresh tokens, strategies, guards
+│   ├── users/            # User CRUD, profile, account management
+│   ├── vehicles/         # Vehicle registration, ownership, mileage
+│   ├── service-requests/ # Core workflow — create, assign, status tracking
+│   ├── maintenance-records/ # Service history, audit records
+│   ├── inventory/        # Parts, stock tracking, usage
+│   └── invoices/         # Labor + parts billing, payment status
+├── shared/               # Constants, enums, interfaces
+└── main.ts               # Bootstrap — Helmet, CORS, Pino, Swagger, pipes
 ```
 
-## Run tests
+→ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design breakdown.
+
+---
+
+## Modules & Status
+
+| Module | Status | Key Features |
+|---|---|---|
+| 🔧 Foundation | ✅ Partial | Config, env validation, rate limiting |
+| 🔐 Auth | 🔲 Planned | Register, login, JWT access + refresh, logout, RBAC |
+| 👤 Users | 🔲 Planned | CRUD, profile, activate/deactivate, search, pagination |
+| 🚗 Vehicles | 🔲 Planned | Register, assign owner, mileage, service intervals |
+| 🛠 Service Requests | 🔲 Planned | Core workflow, mechanic assignment, status transitions |
+| 📋 Maintenance Records | 🔲 Planned | History, filtering, audit logs |
+| 📦 Inventory | 🔲 Planned | Parts, stock, low-stock alerts, usage tracking |
+| 🧾 Invoices | 🔲 Planned | Labor + parts cost, invoice gen, payment status |
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm (`npm install -g pnpm`)
+- Docker + Docker Compose
+
+### 1. Clone & Install
 
 ```bash
-# unit tests
-$ pnpm run test
-
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+git clone https://github.com/harleymamalias/meka-ops.git
+cd meka-ops
+pnpm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 2. Configure Environment
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+cp .env.example .env
+# Edit .env — fill in DB credentials and JWT secrets
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### 3. Start PostgreSQL (Docker)
 
-## Resources
+```bash
+docker compose up -d postgres
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+### 4. Run Migrations
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+pnpm run migration:run
+```
 
-## Support
+### 5. Start Dev Server
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+pnpm run start:dev
+```
 
-## Stay in touch
+### 6. Access
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+| Service | URL |
+|---|---|
+| API | http://localhost:4001/api |
+| Health Check | http://localhost:4001/api/health |
+| Swagger UI | http://localhost:4001/api/docs |
+
+→ Full setup guide: [docs/SETUP.md](docs/SETUP.md)
+
+---
+
+## Scripts
+
+```bash
+pnpm run start:dev         # Start with hot reload
+pnpm run start:debug       # Start with debugger
+pnpm run build             # Compile TypeScript
+pnpm run start:prod        # Run compiled output
+
+pnpm run lint              # ESLint check + fix
+pnpm run format            # Prettier format
+
+pnpm run test              # Unit tests
+pnpm run test:e2e          # E2E tests
+pnpm run test:cov          # Coverage report
+
+pnpm run migration:generate -- src/database/migrations/MigrationName
+pnpm run migration:run     # Apply pending migrations
+pnpm run migration:revert  # Revert last migration
+```
+
+---
+
+## Development Phases
+
+| Phase | Name | Status |
+|---|---|---|
+| Phase 0 | Foundation — Docker, TypeORM, Bootstrap | 🔲 In Progress |
+| Phase 1 | Authentication Module | 🔲 Planned |
+| Phase 2 | Users & RBAC | 🔲 Planned |
+| Phase 3 | Vehicles Module | 🔲 Planned |
+| Phase 4 | Service Requests (Core) | 🔲 Planned |
+| Phase 5 | Maintenance Records | 🔲 Planned |
+| Phase 6 | Inventory Module | 🔲 Planned |
+| Phase 7 | Invoices & Payments | 🔲 Planned |
+| Phase 8 | CI/CD & Deployment | 🔲 Planned |
+
+→ See [docs/PHASES.md](docs/PHASES.md) for objectives, deliverables, and done criteria per phase.
+
+---
+
+## Documentation
+
+| Document | Description |
+|---|---|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, module structure, request lifecycle, design decisions |
+| [PHASES.md](docs/PHASES.md) | Phased development plan with objectives and done criteria |
+| [SETUP.md](docs/SETUP.md) | Local dev setup, Docker, migrations, environment config |
+| [BEST_PRACTICES.md](docs/BEST_PRACTICES.md) | Coding standards, naming conventions, patterns |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Branch strategy, conventional commits, PR checklist |
+| [REFERENCES.md](docs/REFERENCES.md) | Curated links — docs, guides, tools |
+
+---
+
+## Repository
+
+- **GitHub:** https://github.com/harleymamalias/meka-ops
+- **Branch strategy:** `main` (stable) ← PRs from `feat/*`, `fix/*`, `chore/*`
+- **Commits:** [Conventional Commits](https://www.conventionalcommits.org/)
+
+---
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Private — personal learning and portfolio project.

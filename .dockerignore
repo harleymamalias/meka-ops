@@ -1,0 +1,45 @@
+# Dependencies
+node_modules
+
+# Build output (builder stage copies from dist)
+dist
+
+# Source (not needed in production image)
+src
+test
+docs
+
+# Config files (not needed in image)
+*.config.mjs
+*.config.js
+tsconfig*.json
+nest-cli.json
+eslint.config.mjs
+.prettierrc
+
+# Environment files — never bake into image
+.env
+.env.*
+!.env.example
+
+# Dev tools
+.vscode
+.git
+.gitignore
+.pi
+
+# Logs
+*.log
+logs/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# README/docs
+README.md
+*.md
