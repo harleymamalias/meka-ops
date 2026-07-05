@@ -17,7 +17,7 @@
     "test:watch": "jest --watch --watchman=false",
     "test:cov": "jest --coverage --watchman=false",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "jest --config ./test/jest-e2e.json --watchman=false",
     "migration:generate": "node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:generate -d src/database/data-source.ts",
     "migration:create": "node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:create",
     "migration:run": "node --loader ts-node/esm ./node_modules/typeorm/cli.js migration:run -d src/database/data-source.ts",
