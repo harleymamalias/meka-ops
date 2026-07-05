@@ -22,6 +22,7 @@ import { UsersModule } from './modules/users/users.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
+import { ServiceRequestsModule } from './modules/service-requests/service-requests.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { VehiclesModule } from './modules/vehicles/vehicles.module';
     UsersModule,
     AuthModule,
     VehiclesModule,
+    ServiceRequestsModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport:
