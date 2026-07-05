@@ -17,6 +17,10 @@ import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
+import { RolesGuard } from './common/guards/roles.guard';
 
 @Module({
   imports: [
@@ -36,6 +40,8 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
       errorMessage: 'Too many requests. Please wait a moment and try again.',
     }),
     DatabaseModule,
+    UsersModule,
+    AuthModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport:
@@ -61,6 +67,8 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
     { provide: APP_FILTER, useClass: AllExceptionsFilter },
     { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
