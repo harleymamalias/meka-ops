@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { appConfig } from './config/app.config';
@@ -8,9 +8,15 @@ import { throttlerConfig } from './config/throttler.config';
 import { EnvironmentConfigService } from './modules/environment-config/environment-config';
 import { AppController } from './app.controller';
 import { EnvironmentConfigModule } from './modules/environment-config/environment-config.module';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { validationSchema } from './config/app-validation.schema';
+import { DatabaseModule } from './database/database.module';
+import { LoggerModule } from 'nestjs-pino';
+import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 @Module({
   imports: [
@@ -29,6 +35,23 @@ import { validationSchema } from './config/app-validation.schema';
       ],
       errorMessage: 'Too many requests. Please wait a moment and try again.',
     }),
+    DatabaseModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport:
+          process.env.NODE_ENV !== 'prod'
+            ? {
+                target: 'pino-pretty',
+                options: {
+                  colorize: true,
+                  levelFirst: true,
+                  translateTime: 'SYS:standard',
+                  ignore: 'pid,hostname',
+                },
+              }
+            : undefined,
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [
@@ -38,7 +61,14 @@ import { validationSchema } from './config/app-validation.schema';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
   ],
   exports: [EnvironmentConfigService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestIdMiddleware).forRoutes('*');
+  }
+}
