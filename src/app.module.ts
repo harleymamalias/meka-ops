@@ -24,6 +24,7 @@ import { RolesGuard } from './common/guards/roles.guard';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
 import { ServiceRequestsModule } from './modules/service-requests/service-requests.module';
 import { MaintenanceRecordsModule } from './modules/maintenance-records/maintenance-records.module';
+import { InventoryModule } from './modules/inventory/inventory.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { MaintenanceRecordsModule } from './modules/maintenance-records/maintena
     VehiclesModule,
     ServiceRequestsModule,
     MaintenanceRecordsModule,
+    InventoryModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport:
