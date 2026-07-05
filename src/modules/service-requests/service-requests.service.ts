@@ -12,6 +12,7 @@ import { ServiceRequestStatus } from '../../shared/enums/service-request-status.
 import type { JwtUser } from '../auth/types/jwt-user.type';
 import { UsersService } from '../users/users.service';
 import { VehiclesService } from '../vehicles/vehicles.service';
+import { MaintenanceRecordsService } from '../maintenance-records/maintenance-records.service';
 import { AssignMechanicDto } from './dto/assign-mechanic.dto';
 import { CreateServiceRequestDto } from './dto/create-service-request.dto';
 import { ServiceRequestQueryDto } from './dto/service-request-query.dto';
@@ -46,6 +47,7 @@ export class ServiceRequestsService {
     private readonly timelineRepository: Repository<ServiceRequestTimeline>,
     private readonly vehiclesService: VehiclesService,
     private readonly usersService: UsersService,
+    private readonly maintenanceRecordsService: MaintenanceRecordsService,
   ) {}
 
   async create(
@@ -197,6 +199,10 @@ export class ServiceRequestsService {
       dto.status,
       dto.note,
     );
+
+    if (dto.status === ServiceRequestStatus.COMPLETED) {
+      await this.maintenanceRecordsService.createFromServiceRequest(request.id);
+    }
 
     return this.findById(id, currentUser);
   }

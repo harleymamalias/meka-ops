@@ -23,6 +23,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { RolesGuard } from './common/guards/roles.guard';
 import { VehiclesModule } from './modules/vehicles/vehicles.module';
 import { ServiceRequestsModule } from './modules/service-requests/service-requests.module';
+import { MaintenanceRecordsModule } from './modules/maintenance-records/maintenance-records.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ServiceRequestsModule } from './modules/service-requests/service-reques
     AuthModule,
     VehiclesModule,
     ServiceRequestsModule,
+    MaintenanceRecordsModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport:
