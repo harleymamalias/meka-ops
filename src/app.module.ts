@@ -25,6 +25,7 @@ import { VehiclesModule } from './modules/vehicles/vehicles.module';
 import { ServiceRequestsModule } from './modules/service-requests/service-requests.module';
 import { MaintenanceRecordsModule } from './modules/maintenance-records/maintenance-records.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
+import { InvoicesModule } from './modules/invoices/invoices.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { InventoryModule } from './modules/inventory/inventory.module';
     ServiceRequestsModule,
     MaintenanceRecordsModule,
     InventoryModule,
+    InvoicesModule,
     LoggerModule.forRoot({
       pinoHttp: {
         transport:
