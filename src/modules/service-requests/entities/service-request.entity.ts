@@ -51,7 +51,10 @@ export class ServiceRequest {
   @Column({ name: 'estimated_completion', type: 'timestamptz', nullable: true })
   estimatedCompletion?: Date;
 
-  @OneToMany(() => ServiceRequestTimeline, (timeline) => timeline.serviceRequest)
+  @OneToMany(
+    () => ServiceRequestTimeline,
+    (timeline) => timeline.serviceRequest,
+  )
   timeline: ServiceRequestTimeline[];
 
   @CreateDateColumn({ name: 'created_at' })

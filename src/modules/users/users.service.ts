@@ -10,7 +10,10 @@ import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserQueryDto } from './dto/user-query.dto';
-import { paginate, paginationOptions } from '../../common/utils/pagination.util';
+import {
+  paginate,
+  paginationOptions,
+} from '../../common/utils/pagination.util';
 import { Role } from '../../shared/enums/role.enum';
 
 @Injectable()

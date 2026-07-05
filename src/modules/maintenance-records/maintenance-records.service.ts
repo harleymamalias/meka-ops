@@ -6,7 +6,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { paginate, paginationOptions } from '../../common/utils/pagination.util';
+import {
+  paginate,
+  paginationOptions,
+} from '../../common/utils/pagination.util';
 import { Role } from '../../shared/enums/role.enum';
 import { ServiceRequestStatus } from '../../shared/enums/service-request-status.enum';
 import type { JwtUser } from '../auth/types/jwt-user.type';
@@ -26,7 +29,9 @@ export class MaintenanceRecordsService {
     private readonly vehiclesService: VehiclesService,
   ) {}
 
-  async createManual(dto: CreateMaintenanceRecordDto): Promise<MaintenanceRecord> {
+  async createManual(
+    dto: CreateMaintenanceRecordDto,
+  ): Promise<MaintenanceRecord> {
     await this.vehiclesService.findById(dto.vehicleId);
     return this.recordsRepository.save(this.recordsRepository.create(dto));
   }
@@ -80,7 +85,9 @@ export class MaintenanceRecordsService {
       qb.andWhere('vehicle.ownerId = :ownerId', { ownerId: currentUser.sub });
     }
     if (query.vehicleId) {
-      qb.andWhere('record.vehicleId = :vehicleId', { vehicleId: query.vehicleId });
+      qb.andWhere('record.vehicleId = :vehicleId', {
+        vehicleId: query.vehicleId,
+      });
     }
     if (query.serviceType) {
       qb.andWhere('record.serviceType ILIKE :serviceType', {
@@ -88,7 +95,9 @@ export class MaintenanceRecordsService {
       });
     }
     if (query.dateFrom) {
-      qb.andWhere('record.createdAt >= :dateFrom', { dateFrom: query.dateFrom });
+      qb.andWhere('record.createdAt >= :dateFrom', {
+        dateFrom: query.dateFrom,
+      });
     }
     if (query.dateTo) {
       qb.andWhere('record.createdAt <= :dateTo', { dateTo: query.dateTo });

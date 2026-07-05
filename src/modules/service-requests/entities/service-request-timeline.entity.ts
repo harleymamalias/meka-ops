@@ -28,7 +28,12 @@ export class ServiceRequestTimeline {
   @ManyToOne(() => User, { onDelete: 'RESTRICT' })
   changedBy: User;
 
-  @Column({ name: 'from_status', type: 'enum', enum: ServiceRequestStatus, nullable: true })
+  @Column({
+    name: 'from_status',
+    type: 'enum',
+    enum: ServiceRequestStatus,
+    nullable: true,
+  })
   fromStatus?: ServiceRequestStatus;
 
   @Column({ name: 'to_status', type: 'enum', enum: ServiceRequestStatus })

@@ -21,7 +21,9 @@ import { ServiceRequestsService } from './service-requests.service';
 
 @Controller('service-requests')
 export class ServiceRequestsController {
-  constructor(private readonly serviceRequestsService: ServiceRequestsService) {}
+  constructor(
+    private readonly serviceRequestsService: ServiceRequestsService,
+  ) {}
 
   @Roles(Role.ADMIN, Role.SERVICE_ADVISOR)
   @Post()
@@ -31,7 +33,10 @@ export class ServiceRequestsController {
 
   @Roles(Role.ADMIN, Role.SERVICE_ADVISOR, Role.MECHANIC, Role.CUSTOMER)
   @Get()
-  findAll(@Query() query: ServiceRequestQueryDto, @CurrentUser() user: JwtUser) {
+  findAll(
+    @Query() query: ServiceRequestQueryDto,
+    @CurrentUser() user: JwtUser,
+  ) {
     return this.serviceRequestsService.findAll(query, user);
   }
 

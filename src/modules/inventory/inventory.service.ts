@@ -7,7 +7,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { paginate, paginationOptions } from '../../common/utils/pagination.util';
+import {
+  paginate,
+  paginationOptions,
+} from '../../common/utils/pagination.util';
 import { Role } from '../../shared/enums/role.enum';
 import { ServiceRequestStatus } from '../../shared/enums/service-request-status.enum';
 import type { JwtUser } from '../auth/types/jwt-user.type';
@@ -85,7 +88,10 @@ export class InventoryService {
     return this.withLowStock(item);
   }
 
-  async update(id: string, dto: UpdateInventoryItemDto): Promise<InventoryItem> {
+  async update(
+    id: string,
+    dto: UpdateInventoryItemDto,
+  ): Promise<InventoryItem> {
     const item = await this.inventoryRepository.findOne({ where: { id } });
     if (!item) {
       throw new NotFoundException('Inventory item not found.');
@@ -93,7 +99,9 @@ export class InventoryService {
 
     if (dto.sku) {
       const sku = dto.sku.trim().toUpperCase();
-      const existing = await this.inventoryRepository.findOne({ where: { sku } });
+      const existing = await this.inventoryRepository.findOne({
+        where: { sku },
+      });
       if (existing && existing.id !== id) {
         throw new ConflictException('SKU is already registered.');
       }

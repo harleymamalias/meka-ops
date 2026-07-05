@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateUsersAndRefreshTokens1783250000000
-  implements MigrationInterface
-{
+export class CreateUsersAndRefreshTokens1783250000000 implements MigrationInterface {
   name = 'CreateUsersAndRefreshTokens1783250000000';
 
   async up(queryRunner: QueryRunner): Promise<void> {

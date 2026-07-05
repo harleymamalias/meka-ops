@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -37,7 +34,10 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
-    const passwordMatches = await bcrypt.compare(dto.password, user.passwordHash);
+    const passwordMatches = await bcrypt.compare(
+      dto.password,
+      user.passwordHash,
+    );
     if (!passwordMatches) {
       throw new UnauthorizedException('Invalid credentials.');
     }
@@ -59,7 +59,10 @@ export class AuthService {
       order: { createdAt: 'DESC' },
     });
 
-    const match = await this.findMatchingRefreshToken(refreshToken, storedTokens);
+    const match = await this.findMatchingRefreshToken(
+      refreshToken,
+      storedTokens,
+    );
     if (!match) {
       throw new UnauthorizedException('Invalid refresh token.');
     }
@@ -73,7 +76,10 @@ export class AuthService {
     const storedTokens = await this.refreshTokensRepository.find({
       where: { userId: payload.sub },
     });
-    const match = await this.findMatchingRefreshToken(refreshToken, storedTokens);
+    const match = await this.findMatchingRefreshToken(
+      refreshToken,
+      storedTokens,
+    );
 
     if (match) {
       await this.refreshTokensRepository.delete(match.id);
@@ -108,7 +114,9 @@ export class AuthService {
     });
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('jwt.refreshSecret'),
-      expiresIn: this.configService.get<string>('jwt.refreshExpiresIn') as never,
+      expiresIn: this.configService.get<string>(
+        'jwt.refreshExpiresIn',
+      ) as never,
     });
 
     await this.refreshTokensRepository.save(

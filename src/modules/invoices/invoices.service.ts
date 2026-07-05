@@ -6,7 +6,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { paginate, paginationOptions } from '../../common/utils/pagination.util';
+import {
+  paginate,
+  paginationOptions,
+} from '../../common/utils/pagination.util';
 import { InvoiceStatus } from '../../shared/enums/invoice-status.enum';
 import { ServiceRequestStatus } from '../../shared/enums/service-request-status.enum';
 import { InventoryService } from '../inventory/inventory.service';
@@ -31,7 +34,9 @@ export class InvoicesService {
     });
 
     if (existing) {
-      throw new ConflictException('Invoice already exists for this service request.');
+      throw new ConflictException(
+        'Invoice already exists for this service request.',
+      );
     }
 
     const request = await this.serviceRequestsService.findById(

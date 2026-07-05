@@ -29,7 +29,9 @@ export class RolesGuard implements CanActivate {
       .getRequest<Request & { user?: JwtUser }>();
 
     if (!request.user || !roles.includes(request.user.role)) {
-      throw new ForbiddenException('You do not have permission to access this resource.');
+      throw new ForbiddenException(
+        'You do not have permission to access this resource.',
+      );
     }
 
     return true;

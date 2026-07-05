@@ -35,7 +35,11 @@ async function bootstrap() {
   app.setGlobalPrefix(process.env.API_PREFIX || 'api');
   if (process.env.NODE_ENV !== 'prod') {
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup(`${process.env.API_PREFIX || 'api'}/docs`, app, document);
+    SwaggerModule.setup(
+      `${process.env.API_PREFIX || 'api'}/docs`,
+      app,
+      document,
+    );
   }
 
   await app.listen(process.env.PORT || 4001);

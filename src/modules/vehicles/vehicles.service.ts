@@ -13,7 +13,10 @@ import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { UpdateVehicleDto } from './dto/update-vehicle.dto';
 import { VehicleQueryDto } from './dto/vehicle-query.dto';
 import { Vehicle } from './entities/vehicle.entity';
-import { paginate, paginationOptions } from '../../common/utils/pagination.util';
+import {
+  paginate,
+  paginationOptions,
+} from '../../common/utils/pagination.util';
 
 @Injectable()
 export class VehiclesService {

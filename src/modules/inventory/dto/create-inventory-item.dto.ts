@@ -1,10 +1,4 @@
-import {
-  IsDecimal,
-  IsInt,
-  IsOptional,
-  IsString,
-  Min,
-} from 'class-validator';
+import { IsDecimal, IsInt, IsOptional, IsString, Min } from 'class-validator';
 
 export class CreateInventoryItemDto {
   @IsString()

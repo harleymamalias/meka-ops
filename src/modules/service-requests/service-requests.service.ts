@@ -6,7 +6,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { paginate, paginationOptions } from '../../common/utils/pagination.util';
+import {
+  paginate,
+  paginationOptions,
+} from '../../common/utils/pagination.util';
 import { Role } from '../../shared/enums/role.enum';
 import { ServiceRequestStatus } from '../../shared/enums/service-request-status.enum';
 import type { JwtUser } from '../auth/types/jwt-user.type';
@@ -23,7 +26,10 @@ import { ServiceRequest } from './entities/service-request.entity';
 
 @Injectable()
 export class ServiceRequestsService {
-  private readonly transitions: Record<ServiceRequestStatus, ServiceRequestStatus[]> = {
+  private readonly transitions: Record<
+    ServiceRequestStatus,
+    ServiceRequestStatus[]
+  > = {
     [ServiceRequestStatus.PENDING]: [
       ServiceRequestStatus.INSPECTING,
       ServiceRequestStatus.CANCELLED,
@@ -104,10 +110,14 @@ export class ServiceRequestsService {
       });
     }
     if (query.vehicleId) {
-      qb.andWhere('request.vehicleId = :vehicleId', { vehicleId: query.vehicleId });
+      qb.andWhere('request.vehicleId = :vehicleId', {
+        vehicleId: query.vehicleId,
+      });
     }
     if (query.dateFrom) {
-      qb.andWhere('request.createdAt >= :dateFrom', { dateFrom: query.dateFrom });
+      qb.andWhere('request.createdAt >= :dateFrom', {
+        dateFrom: query.dateFrom,
+      });
     }
     if (query.dateTo) {
       qb.andWhere('request.createdAt <= :dateTo', { dateTo: query.dateTo });
@@ -153,7 +163,9 @@ export class ServiceRequestsService {
 
     const mechanic = await this.usersService.findById(dto.mechanicId);
     if (mechanic.role !== Role.MECHANIC) {
-      throw new UnprocessableEntityException('Assigned user must be a mechanic.');
+      throw new UnprocessableEntityException(
+        'Assigned user must be a mechanic.',
+      );
     }
 
     request.mechanicId = mechanic.id;
@@ -183,7 +195,10 @@ export class ServiceRequestsService {
       );
     }
 
-    if (dto.status === ServiceRequestStatus.IN_PROGRESS && !request.mechanicId) {
+    if (
+      dto.status === ServiceRequestStatus.IN_PROGRESS &&
+      !request.mechanicId
+    ) {
       throw new UnprocessableEntityException(
         'A mechanic must be assigned before work can start.',
       );
@@ -219,7 +234,9 @@ export class ServiceRequestsService {
       currentUser.role === Role.MECHANIC &&
       request.mechanicId !== currentUser.sub
     ) {
-      throw new ForbiddenException('Only the assigned mechanic can update remarks.');
+      throw new ForbiddenException(
+        'Only the assigned mechanic can update remarks.',
+      );
     }
 
     request.remarks = dto.remarks;

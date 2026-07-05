@@ -1,8 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateServiceRequests1783250200000
-  implements MigrationInterface
-{
+export class CreateServiceRequests1783250200000 implements MigrationInterface {
   name = 'CreateServiceRequests1783250200000';
 
   async up(queryRunner: QueryRunner): Promise<void> {
@@ -46,6 +44,8 @@ export class CreateServiceRequests1783250200000
   async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DROP TABLE "service_request_timelines"`);
     await queryRunner.query(`DROP TABLE "service_requests"`);
-    await queryRunner.query(`DROP TYPE "public"."service_requests_status_enum"`);
+    await queryRunner.query(
+      `DROP TYPE "public"."service_requests_status_enum"`,
+    );
   }
 }
