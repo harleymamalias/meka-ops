@@ -192,6 +192,7 @@ pnpm run migration:revert  # Revert last migration
 | [PHASES.md](docs/PHASES.md) | Phased development plan with objectives and done criteria |
 | [SETUP.md](docs/SETUP.md) | Local dev setup, Docker, migrations, environment config |
 | [PROJECT_ROADMAP.md](docs/PROJECT_ROADMAP.md) | Shared implementation plan, milestones, and working agreement |
+| [FRONTEND_ARCHITECTURE.md](docs/FRONTEND_ARCHITECTURE.md) | Production frontend folder structure and engineering practices |
 | [BEST_PRACTICES.md](docs/BEST_PRACTICES.md) | Coding standards, naming conventions, patterns |
 | [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Branch strategy, conventional commits, PR checklist |
 | [REFERENCES.md](docs/REFERENCES.md) | Curated links — docs, guides, tools |
