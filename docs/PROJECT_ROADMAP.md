@@ -56,9 +56,11 @@ The frontend will use the design-system specification as its code-first design s
 
 ## Milestones
 
-### Milestone 1 — Frontend Foundation
+### Milestone 1 — Frontend Foundation — Implemented Locally
 
 Goal: establish a runnable frontend with the design system encoded in code.
+
+Status: implemented locally on 2026-07-22. The foundation is available under `frontend/` and is ready for visual refinement and API-backed feature work.
 
 Deliverables:
 
@@ -77,6 +79,15 @@ Completion criteria:
 - The shell is usable on desktop and mobile widths.
 - Components use semantic tokens rather than hardcoded screen-specific colors.
 - Loading, empty, error, and disabled states are represented in the shared components.
+
+Verification completed:
+
+- `pnpm typecheck` passes.
+- `pnpm lint` passes.
+- `pnpm test` passes with 2 component tests.
+- `pnpm build` passes.
+- `pnpm build-storybook` passes.
+- `pnpm test:e2e` passes with 2 browser tests.
 
 ### Milestone 2 — Authentication And Access
 
