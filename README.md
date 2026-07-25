@@ -33,21 +33,21 @@ This project is intentionally built as a **learning vehicle** for production bac
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | NestJS 11 |
-| Language | TypeScript 5.7 |
-| Database | PostgreSQL 16 |
-| ORM | TypeORM 0.3 |
-| Auth | JWT (access + refresh), Passport, bcrypt |
-| Validation | class-validator, class-transformer, Joi |
-| Logging | nestjs-pino (structured JSON logs) |
-| Rate Limiting | @nestjs/throttler |
-| API Docs | Swagger / OpenAPI |
-| Security | Helmet, CORS |
-| Package Manager | pnpm |
-| Containerization | Docker + Docker Compose |
-| CI/CD | GitHub Actions |
+| Layer            | Technology                               |
+| ---------------- | ---------------------------------------- |
+| Framework        | NestJS 11                                |
+| Language         | TypeScript 5.7                           |
+| Database         | PostgreSQL 16                            |
+| ORM              | TypeORM 0.3                              |
+| Auth             | JWT (access + refresh), Passport, bcrypt |
+| Validation       | class-validator, class-transformer, Joi  |
+| Logging          | nestjs-pino (structured JSON logs)       |
+| Rate Limiting    | @nestjs/throttler                        |
+| API Docs         | Swagger / OpenAPI                        |
+| Security         | Helmet, CORS                             |
+| Package Manager  | pnpm                                     |
+| Containerization | Docker + Docker Compose                  |
+| CI/CD            | GitHub Actions                           |
 
 ---
 
@@ -72,22 +72,22 @@ src/
 └── main.ts               # Bootstrap — Helmet, CORS, Pino, Swagger, pipes
 ```
 
-→ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design breakdown.
+→ See [docs/backend/ARCHITECTURE.md](docs/backend/ARCHITECTURE.md) for the full design breakdown.
 
 ---
 
 ## Modules & Status
 
-| Module | Status | Key Features |
-|---|---|---|
-| 🔧 Foundation | ✅ Partial | Config, env validation, rate limiting |
-| 🔐 Auth | 🔲 Planned | Register, login, JWT access + refresh, logout, RBAC |
-| 👤 Users | 🔲 Planned | CRUD, profile, activate/deactivate, search, pagination |
-| 🚗 Vehicles | 🔲 Planned | Register, assign owner, mileage, service intervals |
-| 🛠 Service Requests | 🔲 Planned | Core workflow, mechanic assignment, status transitions |
-| 📋 Maintenance Records | 🔲 Planned | History, filtering, audit logs |
-| 📦 Inventory | 🔲 Planned | Parts, stock, low-stock alerts, usage tracking |
-| 🧾 Invoices | 🔲 Planned | Labor + parts cost, invoice gen, payment status |
+| Module                 | Status     | Key Features                                           |
+| ---------------------- | ---------- | ------------------------------------------------------ |
+| 🔧 Foundation          | ✅ Partial | Config, env validation, rate limiting                  |
+| 🔐 Auth                | 🔲 Planned | Register, login, JWT access + refresh, logout, RBAC    |
+| 👤 Users               | 🔲 Planned | CRUD, profile, activate/deactivate, search, pagination |
+| 🚗 Vehicles            | 🔲 Planned | Register, assign owner, mileage, service intervals     |
+| 🛠 Service Requests    | 🔲 Planned | Core workflow, mechanic assignment, status transitions |
+| 📋 Maintenance Records | 🔲 Planned | History, filtering, audit logs                         |
+| 📦 Inventory           | 🔲 Planned | Parts, stock, low-stock alerts, usage tracking         |
+| 🧾 Invoices            | 🔲 Planned | Labor + parts cost, invoice gen, payment status        |
 
 ---
 
@@ -134,13 +134,13 @@ pnpm run start:dev
 
 ### 6. Access
 
-| Service | URL |
-|---|---|
-| API | http://localhost:4001/api |
+| Service      | URL                              |
+| ------------ | -------------------------------- |
+| API          | http://localhost:4001/api        |
 | Health Check | http://localhost:4001/api/health |
-| Swagger UI | http://localhost:4001/api/docs |
+| Swagger UI   | http://localhost:4001/api/docs   |
 
-→ Full setup guide: [docs/SETUP.md](docs/SETUP.md)
+→ Full setup guide: [docs/backend/SETUP.md](docs/backend/SETUP.md)
 
 ---
 
@@ -153,7 +153,8 @@ pnpm run build             # Compile TypeScript
 pnpm run start:prod        # Run compiled output
 
 pnpm run lint              # ESLint check + fix
-pnpm run format            # Prettier format
+pnpm run format            # Format backend and frontend with Prettier
+pnpm run format:check      # Verify formatting without changing files
 
 pnpm run test              # Unit tests
 pnpm run test:e2e          # E2E tests
@@ -168,34 +169,36 @@ pnpm run migration:revert  # Revert last migration
 
 ## Development Phases
 
-| Phase | Name | Status |
-|---|---|---|
+| Phase   | Name                                    | Status         |
+| ------- | --------------------------------------- | -------------- |
 | Phase 0 | Foundation — Docker, TypeORM, Bootstrap | 🔲 In Progress |
-| Phase 1 | Authentication Module | 🔲 Planned |
-| Phase 2 | Users & RBAC | 🔲 Planned |
-| Phase 3 | Vehicles Module | 🔲 Planned |
-| Phase 4 | Service Requests (Core) | 🔲 Planned |
-| Phase 5 | Maintenance Records | 🔲 Planned |
-| Phase 6 | Inventory Module | 🔲 Planned |
-| Phase 7 | Invoices & Payments | 🔲 Planned |
-| Phase 8 | CI/CD & Deployment | 🔲 Planned |
+| Phase 1 | Authentication Module                   | 🔲 Planned     |
+| Phase 2 | Users & RBAC                            | 🔲 Planned     |
+| Phase 3 | Vehicles Module                         | 🔲 Planned     |
+| Phase 4 | Service Requests (Core)                 | 🔲 Planned     |
+| Phase 5 | Maintenance Records                     | 🔲 Planned     |
+| Phase 6 | Inventory Module                        | 🔲 Planned     |
+| Phase 7 | Invoices & Payments                     | 🔲 Planned     |
+| Phase 8 | CI/CD & Deployment                      | 🔲 Planned     |
 
-→ See [docs/PHASES.md](docs/PHASES.md) for objectives, deliverables, and done criteria per phase.
+→ See [docs/backend/PHASES.md](docs/backend/PHASES.md) for objectives, deliverables, and done criteria per phase.
 
 ---
 
 ## Documentation
 
-| Document | Description |
-|---|---|
-| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System design, module structure, request lifecycle, design decisions |
-| [PHASES.md](docs/PHASES.md) | Phased development plan with objectives and done criteria |
-| [SETUP.md](docs/SETUP.md) | Local dev setup, Docker, migrations, environment config |
-| [PROJECT_ROADMAP.md](docs/PROJECT_ROADMAP.md) | Shared implementation plan, milestones, and working agreement |
-| [FRONTEND_ARCHITECTURE.md](docs/FRONTEND_ARCHITECTURE.md) | Production frontend folder structure and engineering practices |
-| [BEST_PRACTICES.md](docs/BEST_PRACTICES.md) | Coding standards, naming conventions, patterns |
-| [CONTRIBUTING.md](docs/CONTRIBUTING.md) | Branch strategy, conventional commits, PR checklist |
-| [REFERENCES.md](docs/REFERENCES.md) | Curated links — docs, guides, tools |
+| Document                                                                    | Description                                                          |
+| --------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [backend/ARCHITECTURE.md](docs/backend/ARCHITECTURE.md)                     | System design, module structure, request lifecycle, design decisions |
+| [backend/PHASES.md](docs/backend/PHASES.md)                                 | Phased development plan with objectives and done criteria            |
+| [backend/SETUP.md](docs/backend/SETUP.md)                                   | Local dev setup, Docker, migrations, environment config              |
+| [PROJECT_ROADMAP.md](docs/PROJECT_ROADMAP.md)                               | Shared implementation plan, milestones, and working agreement        |
+| [frontend/FRONTEND_ARCHITECTURE.md](docs/frontend/FRONTEND_ARCHITECTURE.md) | Production frontend structure and engineering practices              |
+| [frontend/DESIGN_SYSTEM_SPEC.md](docs/frontend/DESIGN_SYSTEM_SPEC.md)       | Visual tokens, components, screens, and interaction rules            |
+| [backend/BEST_PRACTICES.md](docs/backend/BEST_PRACTICES.md)                 | Backend coding standards, naming conventions, and patterns           |
+| [CONTRIBUTING.md](docs/CONTRIBUTING.md)                                     | Branch strategy, conventional commits, PR checklist                  |
+| [backend/REFERENCES.md](docs/backend/REFERENCES.md)                         | Backend framework, database, and infrastructure references           |
+| [frontend/REFERENCES.md](docs/frontend/REFERENCES.md)                       | Frontend framework and official styling references                   |
 
 ---
 

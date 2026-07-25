@@ -32,8 +32,8 @@ These are known issues or quality improvements, not reasons to block frontend se
 
 The design and implementation references are:
 
-1. [DESIGN_SYSTEM_SPEC.md](./DESIGN_SYSTEM_SPEC.md) for visual tokens, components, screens, and interaction direction.
-2. [FRONTEND_ARCHITECTURE.md](./FRONTEND_ARCHITECTURE.md) for frontend structure, ownership, and engineering rules.
+1. [DESIGN_SYSTEM_SPEC.md](./frontend/DESIGN_SYSTEM_SPEC.md) for visual tokens, components, screens, and interaction direction.
+2. [FRONTEND_ARCHITECTURE.md](./frontend/FRONTEND_ARCHITECTURE.md) for frontend structure, ownership, and engineering rules.
 3. The backend controllers, DTOs, response envelope, and Swagger document for API contracts.
 4. This roadmap for sequencing, decisions, and completion criteria.
 

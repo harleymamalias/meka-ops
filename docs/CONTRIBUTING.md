@@ -32,6 +32,7 @@ docs/architecture-update
 ```
 
 ### Rules
+
 - Branch from `main`
 - One feature/fix per branch
 - Delete branch after merging
@@ -42,6 +43,7 @@ docs/architecture-update
 ## Conventional Commits
 
 Format:
+
 ```
 <type>(<scope>): <short description>
 
@@ -52,17 +54,17 @@ Format:
 
 ### Types
 
-| Type | When to Use |
-|---|---|
-| `feat` | New feature or capability |
-| `fix` | Bug fix |
-| `chore` | Build, tooling, deps, config — no production code change |
-| `refactor` | Code restructure — no behavior change |
-| `test` | Adding or updating tests |
-| `docs` | Documentation only |
-| `perf` | Performance improvement |
-| `ci` | CI/CD changes |
-| `style` | Formatting only (prettier, whitespace) |
+| Type       | When to Use                                              |
+| ---------- | -------------------------------------------------------- |
+| `feat`     | New feature or capability                                |
+| `fix`      | Bug fix                                                  |
+| `chore`    | Build, tooling, deps, config — no production code change |
+| `refactor` | Code restructure — no behavior change                    |
+| `test`     | Adding or updating tests                                 |
+| `docs`     | Documentation only                                       |
+| `perf`     | Performance improvement                                  |
+| `ci`       | CI/CD changes                                            |
+| `style`    | Formatting only (prettier, whitespace)                   |
 
 ### Scope
 
@@ -105,8 +107,8 @@ Add a body when the why isn't obvious from the title:
 ```
 fix(inventory): prevent negative stock on concurrent requests
 
-Using a database-level row lock (SELECT FOR UPDATE) inside the 
-transaction to prevent race conditions when two service requests 
+Using a database-level row lock (SELECT FOR UPDATE) inside the
+transaction to prevent race conditions when two service requests
 try to consume the last unit simultaneously.
 
 Closes #12
@@ -124,6 +126,9 @@ pnpm run lint
 
 # 2. Format your code
 pnpm run format
+
+# Optional: verify formatting without changing files
+pnpm run format:check
 
 # 3. Run tests (at minimum the ones related to what you changed)
 pnpm run test

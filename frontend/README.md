@@ -25,4 +25,4 @@ pnpm storybook        # Component workbench at :6006
 pnpm build-storybook  # Static Storybook build
 ```
 
-See the repository-level [frontend architecture](../docs/FRONTEND_ARCHITECTURE.md) and [design system specification](../docs/DESIGN_SYSTEM_SPEC.md) for ownership rules and visual tokens.
+See the repository-level [frontend architecture](../docs/frontend/FRONTEND_ARCHITECTURE.md) and [design system specification](../docs/frontend/DESIGN_SYSTEM_SPEC.md) for ownership rules and visual tokens.
